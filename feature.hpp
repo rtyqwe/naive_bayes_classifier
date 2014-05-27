@@ -51,16 +51,24 @@ public :
   }
 
   int isFeaturePresent(string s) {
-    /* YOUR CODE HERE
+    string upperS;
+    for(size_t i = 0; i < s.size(); i++){
+      if(toupper(s.at(i)) == m_toMatch[0])
+        return 1;
+    }  //make the case of string same as feature
+
+    return 0;
+    /* 
      *
      * Determine whether this feature occurs in the string.
      * Return 1 if the feature is present; 0 otherwise.
      */
-    return 0;  // stub, replace me!
   }
 
   void addTrainingExample(int featurePresence, int classNumber) {
-    /* YOUR CODE HERE
+    m_counts[classNumber][featurePresence]++;
+    m_totalPerClass[classNumber]++;
+    /* 
      *
      * Given the absence/presence of this feature for the given class,
      * update the counts used to compute the probabilities.
@@ -71,14 +79,20 @@ public :
   }
 
   double getProbOfFeatureGivenClass(int featurePresence, int classNumber) {
-    /* YOUR CODE HERE
+    /*
      *
      * What is the probability of this feature being absent/present for this class?
      * Use your counts, but make sure to smooth it by adding 1 to avoid probabilities of
      * absolute zero or one.
      */
     //.. you need to smooth it so there's never a 0 or 1 probability
-    return 0.0; // stub, replace me!
+    int featureCount = m_counts[classNumber][featurePresence];
+    int total = m_totalPerClass[classNumber];
+    featureCount++;
+   // total+=2;
+    double returnVal = ((double) featureCount)/((double) total);
+    return returnVal;
+
   }
 };
 
